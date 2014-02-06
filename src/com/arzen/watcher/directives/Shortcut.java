@@ -27,7 +27,6 @@ public class Shortcut extends WatcherAction {
 	 */
 	public static final String ACTION_DOWNLOAD = "download";
 
-	private DirectivesAction mDirectivesAction = null;
 
 	public Shortcut(Context context, String directivesStr) {
 		mContext = context;
@@ -50,7 +49,9 @@ public class Shortcut extends WatcherAction {
 			}
 		}
 	}
-
+	/**
+	 * 执行指令
+	 */
 	@Override
 	public void executionDirectivies() {
 		super.executionDirectivies();

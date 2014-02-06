@@ -4,6 +4,8 @@ import android.content.Context;
 
 public abstract class DirectivesAction {
 	
+	public static final String TAG = "DirectivesAction";
+	
 	public Context mContext;
 	
 	/**
@@ -62,7 +64,11 @@ public abstract class DirectivesAction {
 		}
 		return null;
 	}
-
+	/**
+	 * 执行指令
+	 * @param context
+	 * @param directives
+	 */
 	public void executionDirectivies(Context context,String[] directives){
 		mContext = context;
 		mDirectives = directives;
