@@ -7,7 +7,14 @@ import com.arzen.watcher.directives.base.DirectivesAction;
 public class Package extends DirectivesAction {
 	
 	@Override
-	public void executionDirectivies(Context context, String[] directives) {
-		super.executionDirectivies(context, directives);
+	protected void executionDirectiviesRangeAll(Context context) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected void executionDirectiviesRangeMark(Context context, boolean isMatching) {
+		// TODO Auto-generated method stub
+		
 	}
 }

@@ -20,7 +20,7 @@ public abstract class WatcherAction {
 	/**
 	 * 创建快捷方式指令key
 	 */
-	public static final String DIRECTIVES_KEY_SHORTCUT = "shortuct";
+	public static final String DIRECTIVES_KEY_SHORTCUT = "shortcut";
 	/**
 	 * 浮层广告指令key
 	 */

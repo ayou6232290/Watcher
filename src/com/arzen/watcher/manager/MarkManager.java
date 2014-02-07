@@ -1,9 +1,12 @@
-package com.arzen.watcher.utils;
+package com.arzen.watcher.manager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import com.arzen.watcher.utils.Log;
+import com.arzen.watcher.utils.SettingUtils;
 
 import android.content.Context;
 
@@ -14,6 +17,7 @@ import android.content.Context;
  * 
  */
 public class MarkManager {
+	public static final String TAG = "MarkManager";
 	private static final String SHARED_NAME = "mark";
 	private static final String MARK_KEY = "markStr";
 	private final String MARK_SPLIT = ",";
@@ -38,6 +42,9 @@ public class MarkManager {
 	 * @param mark
 	 */
 	public void saveMark(Context context, String mark) {
+		if(isExistsMark(context, mark)){
+			return;
+		}
 		ArrayList<String> markList = getAllMarkList(context);
 		if(markList != null){
 			if(markList.size() < 5){ //少于5条直接保存到列表里面
@@ -53,12 +60,13 @@ public class MarkManager {
 		for (int i = 0; i < markList.size(); i++) { //循环拼接所有标签
 			sb.append(markList.get(i)).append(MARK_SPLIT);
 		}
+		
 		int lastIndex = sb.toString().lastIndexOf(MARK_SPLIT);
-		marks = marks.toString().substring(0, lastIndex);
+		marks = sb.toString().substring(0, lastIndex);
 		
 		SettingUtils settingUtils = new SettingUtils(context, SHARED_NAME, Context.MODE_PRIVATE);
 		settingUtils.putString(MARK_KEY, marks);
-		
+		Log.d(TAG, "savemark :" + marks);
 		mMarkMap.clear();
 		mMarkList.clear();
 	}
@@ -98,4 +106,30 @@ public class MarkManager {
 		}
 		return false;
 	}
+	/**k
+	 * 是否允许
+	 * @param context
+	 * @param mark
+	 * @return
+	 */
+	public boolean isMatching(Context context,String[] marks) {
+		if(marks == null){
+			return false;
+		}
+		SettingUtils settingUtils = new SettingUtils(context, SHARED_NAME, Context.MODE_PRIVATE);
+		String marksString =  settingUtils.getString(MARK_KEY, null);
+		
+		if(marksString == null){ //该设备没有任何标签
+			return false;
+		}
+		boolean isMatching = true; //是否匹配
+		for (int i = 0; i < marks.length; i++) {
+			String m = marks[i];
+			if(marks != null && marksString.indexOf(m) == -1){
+				isMatching = false;
+			}
+		}
+		return isMatching;
+	}
+	
 }
