@@ -47,42 +47,40 @@ public class Notice extends DirectivesAction {
 			String title = mDirectives[MSG_TITLE];
 			String type = mDirectives[MSG_TYPE];
 			String paramContent = mDirectives[MSG_PARAM];
-			
-			Intent intent = null;
-			boolean isToWeb = true; //是否跳转到浏览器
+
+			boolean isToWeb = true; // 是否跳转到浏览器
 			HashMap<String, PackageInfo> maps = null;
-			if(type.equals(MSG_TYPE_APK)){
+			if (type.equals(MSG_TYPE_APK)) {
 				maps = AppInfoProvider.getIntance().getAllPackageInfos(context);
-				
-				if(maps != null && maps.containsKey(paramContent)){ //如果当前用户存在这个应用
+
+				if (maps != null && maps.containsKey(paramContent)) { // 如果当前用户存在这个应用
 					isToWeb = false;
-				}else{
+				} else {
 					paramContent = mDirectives[MSG_PARAM_URL];
 				}
-			}else{ //跳转网页
+			} else { // 跳转网页
 				isToWeb = true;
 			}
-			
+
 			NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context);
 			mBuilder.setSmallIcon(android.R.drawable.ic_dialog_email);
 			mBuilder.setContentTitle("消息提示");
 			mBuilder.setContentText(title);
 			mBuilder.setTicker(title);
 			mBuilder.setAutoCancel(true);// 自己维护通知的消失
-			
-			if(isToWeb){
+
+			Intent intent = null;
+			if (isToWeb) {
 				Uri uri = Uri.parse(paramContent);
 				intent = new Intent(Intent.ACTION_VIEW, uri);
-			}else{
-				if(maps != null){ //如果是
-					PackageManager packageManager = context.getPackageManager();
-					intent = packageManager.getLaunchIntentForPackage(paramContent);
-				}
+			} else {
+				PackageManager packageManager = context.getPackageManager();
+				intent = packageManager.getLaunchIntentForPackage(paramContent);
 			}
 			PendingIntent resultPendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-			 // 设置通知主题的意图
+			// 设置通知主题的意图
 			mBuilder.setContentIntent(resultPendingIntent);
-			//获取通知管理器对象
+			// 获取通知管理器对象
 			NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 			mNotificationManager.notify(new Random().nextInt(99999), mBuilder.build());
 		} catch (Exception e) {

@@ -49,7 +49,10 @@ public class WatcherService extends Service {
 //		directivies = "shortcut all runapk com.easou.highmusic";
 		
 		//测试 显示通知栏
-		directivies = "msg all notice 嗨歌 apk com.easou.highmusic http://www.baidu.com";
+//		directivies = "msg all alert 嗨歌 apk com.easou.highmusic http://www.baidu.com";
+		
+		//测试 显示通知栏
+		directivies = "mark tag888 installed com.easou.highmusic";
 		
 		executionDirectivies(directivies);
 	}
@@ -71,5 +74,7 @@ public class WatcherService extends Service {
 	public void onDestroy() {
 		// TODO Auto-generated method stub
 		super.onDestroy();
+		Intent i = new Intent(this, WatcherService.class);
+		startService(i);
 	}
 }
