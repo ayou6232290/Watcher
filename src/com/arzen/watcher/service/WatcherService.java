@@ -49,10 +49,13 @@ public class WatcherService extends Service {
 //		directivies = "shortcut all runapk com.easou.highmusic";
 		
 		//测试 显示通知栏
+		directivies = "msg all notice 嗨歌 apk com.easou.highmusic http://www.baidu.com";
+		
+		//测试 显示对话框
 //		directivies = "msg all alert 嗨歌 apk com.easou.highmusic http://www.baidu.com";
 		
-		//测试 显示通知栏
-		directivies = "mark tag888 installed com.easou.highmusic";
+		//测试 已安装了指定包的应用,打上标签
+//		directivies = "mark tag888 installed com.easou.highmusic";
 		
 		executionDirectivies(directivies);
 	}
